@@ -13,14 +13,17 @@ flowchart LR
     D --> E
     B --> F[MultiQC]
     C --> F
+    E --> H[samtools]
     E --> F
+    H --> F
 ```
 
 1. **FastQC**: raw read quality control
 2. **Trim Galore**: adapter and quality trimming, with post-trimming FastQC
 3. **HISAT2 build**: genome index built once from the FASTA file
-4. **HISAT2 + samtools**: paired-end alignment to the reference, BAM output
-5. **MultiQC**: one aggregated QC report for all samples
+4. **HISAT2**: paired-end alignment to the reference
+5. **samtools**: BAM sorting, indexing and alignment statistics (flagstat)
+6. **MultiQC**: one aggregated QC report for all samples
 
 ## Quick start
 
@@ -59,7 +62,7 @@ SAMPLE1,path/to/SAMPLE1_R1.fastq.gz,path/to/SAMPLE1_R2.fastq.gz
 | --- | --- |
 | `results/fastqc/` | FastQC reports for raw reads |
 | `results/trimming/` | Trim Galore reports |
-| `results/align/` | One BAM file and one HISAT2 log per sample |
+| `results/align/` | Per sample: sorted BAM, BAM index, HISAT2 log and samtools flagstat |
 | `results/multiqc/` | Aggregated MultiQC report |
 
 ## Example report
